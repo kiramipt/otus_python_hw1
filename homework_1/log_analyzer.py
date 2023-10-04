@@ -180,9 +180,13 @@ def render_template(template_file_path: str, report_file_path: str, statistics: 
     """
 
     # open report template file and replace $table_json to our data
-    with open(template_file_path) as f:
-        s = Template(f.read())
-        s = s.safe_substitute(table_json=json.dumps(statistics))
+    try:
+        with open(template_file_path) as f:
+            s = Template(f.read())
+            s = s.safe_substitute(table_json=json.dumps(statistics))
+    except FileNotFoundError:
+        logging.error(f'Template file {template_file_path} was not founded')
+        return
 
     # write rendered report to report file
     with open(report_file_path, 'w') as f:
@@ -234,14 +238,16 @@ if __name__ == "__main__":
     parser.add_argument('--config', help='path to config file', default=DEFAULT_CONFIG_PATH)
     args = parser.parse_args()
     config_filepath = args.config
+    config = copy.deepcopy(DEFAULT_CONFIG)
 
     # read external config file
-    with open(config_filepath) as f:
-        external_config = json.load(f)
-
-    # update default configs with external values
-    config = copy.deepcopy(DEFAULT_CONFIG)
-    config.update(external_config)
+    try:
+        with open(config_filepath) as f:
+            external_config = json.load(f)
+        # update default configs with external values
+        config.update(external_config)
+    except FileNotFoundError:
+        logging.error(f'Config file {config_filepath} was not founded')
 
     # setup logging configs
     setup_logging(config['LOG_FILE'])
