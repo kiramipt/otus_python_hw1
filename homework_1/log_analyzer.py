@@ -38,6 +38,10 @@ NGINX_LOG_FORMAT_REGEXP = re.compile(
 CUR_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
+class ErrorsLimitExceedError(Exception):
+    pass
+
+
 def setup_logging(log_file: str) -> None:
     """
     Setup logging with configs.
@@ -145,7 +149,7 @@ def calculate_statistics(
     if errors_limit is not None and total > 0:
         cur_errors_limit = (total - processed) / total
         if cur_errors_limit:
-            raise Exception(
+            raise ErrorsLimitExceedError(
                 f"Errors limit = {errors_limit} was exceed, current errors limit={cur_errors_limit}"
             )
 
