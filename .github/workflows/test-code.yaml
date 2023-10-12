@@ -4,15 +4,29 @@ on: [push]
 
 jobs:
 
-  test:
+  isort:
+    name: check import sorting
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - uses: actions/setup-python@v4
         with:
           python-version: 3.9
-      - name: test
+      - name: run isort check
+        uses: isort/isort-action@master
+        with:
+          configuration: '--check-only --diff'
+
+  test:
+    name: run unit test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+      - name: run unit test
         run: |
           python -m unittest
