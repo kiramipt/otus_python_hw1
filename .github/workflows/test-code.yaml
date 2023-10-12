@@ -33,6 +33,20 @@ jobs:
           options: '--check --verbose'
           src: './'
 
+  flake8:
+    name: check code formatting with black
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+      - uses: py-actions/flake8@v2
+        with:
+          exclude: 'venv'
+          max-line-length: '119'
+          path: './'
+
   test:
     name: run unit test
     runs-on: ubuntu-latest
