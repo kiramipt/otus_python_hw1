@@ -1,6 +1,4 @@
-*.log
-
 venv/
-reports/
-log/
 .idea/
+/logs/
+/reports/
