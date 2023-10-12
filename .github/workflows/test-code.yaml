@@ -44,6 +44,7 @@ jobs:
       - uses: py-actions/flake8@v2
         with:
           exclude: 'venv'
+          ignore: 'E722'
           max-line-length: '119'
           path: './'
 
