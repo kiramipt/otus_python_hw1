@@ -12,7 +12,7 @@ import re
 from collections import namedtuple
 from statistics import median
 from string import Template
-from typing import Optional, Tuple, Iterator, Callable, Dict
+from typing import Callable, Dict, Iterator, Optional, Tuple
 
 DEFAULT_CONFIG = {
     "REPORT_SIZE": 10,

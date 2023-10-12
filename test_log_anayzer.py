@@ -1,13 +1,10 @@
-import unittest
-import os
-
-import shutil
-import json
-
-import gzip
 import bz2
-
+import gzip
+import json
 import logging
+import os
+import shutil
+import unittest
 from typing import Optional
 
 import log_analyzer as log_analyzer
